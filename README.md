@@ -1,18 +1,18 @@
-# code-challenge2
+# code-challenge3
 # Name of the Project
-Flatacuties
+Flatiron Movie Theater
 ### Author :CLIFF MUDIGO
 ****
 ## Project Description
-building an app for voting for the cutest animal! using local API for building the frontend of the app.The website should allow users to view information about the different characters, such as their names and images, and also allow them to vote.
+This is a simple web application for managing a list of movies using db.json as the database and to make HTTP request
 
 
 ## SCREENSHOTS
--https://github.com/CLIFF-MUDIGO/code-challenge2/issues/1
 
 
 
-********
+
+
 ## SetUp Instruction
 Run this command to get the backend started:
 
@@ -47,14 +47,12 @@ Write your code in the `src/index.js` file. The base URL for your API will be
 * Open the folder location on terminal and use the following command to run app:
 
 ## How To Run It
->  $ pip install -r requirements.txt
-To install all requirements that is vscode etc
-
-> $ python3 manage.py runserver
-Then run server with the above command
-*****
+1. Clone the repository: git clone https://github.com/yourusername/movie-app.git
+2. Install the dependencies: npm install
+3. Start the server: json-server --watch db.json
+4. Open index.html in a web browser
 ## Live Link
-Or you can access the web application directly via this [LINK.](https://astounding-marshmallow-a4b653.netlify.app/)
+Or you can access the web application directly via this [LINK.]()
 *****
 ## Deliverables
 As a user, I can:
