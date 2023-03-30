@@ -3,68 +3,65 @@ const IMGPATH = "./images/";
 const main = document.getElementById("main");
 const form = document.getElementById("form");
 const searchForm = document.getElementById("searchForm");
-const searchInput = searchForm.getElementsByTagName("input")[0]
-const searchButton = searchForm.getElementsByTagName("button")[0]
 
-//buying ticket button
-const buyTicketButton = document.getElementById('buy-ticket');
+let ticketsAvailable;
 
+
+    // Handle ticket purchase button click
+    const buyTicketButton = document.getElementById('buy-ticket-main');
 buyTicketButton.addEventListener('click', () => {
-  // Handle the button click event here
-});
+      if (ticketsAvailable <= 0) {
+        alert('Sorry, this showing is sold out!');
+      } else {
+        alert('ticket bought!');
+        // Decrement tickets sold and update server
+        data.tickets_sold++;
+        fetch(`http://localhost:3000/films/${data.id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(updatedData => {
+          // Calculate available tickets and update UI
+          const ticketsAvailable = updatedData.capacity - updatedData.tickets_sold;
+          const ticketsAvailableElement = document.querySelector('#main p:last-child');
+          ticketsAvailableElement.textContent = `Available Tickets: ${ticketsAvailable};
+          buyTicketButton.disabled = true;
+          `;
+        });
+      }
+    });
 
-
-// Get movie data from API and display them
-function getMovies(url) {
-  fetch(url)
-    .then(response => response.json())
-    .then(data => {
-      showMovies(data);
-    })
-    .catch(error => console.error(error));
-}
-
-// Display movies on the page
-function showMovies(movies) {
-  main.innerHTML = "";
-
-  movies.forEach(movie => {
-    const { poster, title, vote_average, overview } = movie;
-
-    const movieEl = document.createElement("div");
-    movieEl.classList.add("movie");
-
-    movieEl.innerHTML = `
-      <img src="${IMGPATH + poster}" alt="${title}"/>
-      <div class="movie-info">
-        <h3>${title}</h3>
-        <span class="${getClassByRate(vote_average)}">${vote_average}</span>
-      </div> 
-      <div class="overview">
-        <h2>Overview:</h2>
-        ${overview}
-      </div>
-    `;
-
-    main.appendChild(movieEl);
-  });
-}
-
-// Get class for vote average
-
-
-// Get movies from API when the page loads
-getMovies(APIURL);
 
 // Get movies based on search term
-form.addEventListener("submit", e => {
-  e.preventDefault();
-
-  const searchTerm = search.value.trim();
-
-  if (searchTerm) {
-    getMovies(`${APIURL}?title_like=${searchTerm}`);
-    search.value = "";
-  }
+form.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const searchTerm = document.getElementById("search").value;
+  fetch(`${APIURL}?q=${searchTerm}`)
+    .then((response) => response.json())
+    .then((data) => {
+      const movies = data.filter((movie) =>
+        movie.title.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      displayMovies(movies);
+    })
+    .catch((error) => console.error(error));
 });
+
+// Display movies in the main section
+function displayMovies(movies) {
+  main.innerHTML = "";
+  const moviesList = document.createElement("ul");
+  movies.forEach((movie) => {
+    const li = document.createElement("li");
+    li.textContent = movie.title;
+    li.dataset.id = movie.id;
+    moviesList.appendChild(li);
+  });
+  main.appendChild(moviesList);
+}
+
 

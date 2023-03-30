@@ -16,8 +16,7 @@
   </header>
   <h1>Movie Titles</h1>
   <ul id="films-titles"></ul>
-  
-
+  <button id="buy-ticket-main">Buy Ticket</button>
  
   <main id="main"></main>
   <script>
@@ -57,17 +56,35 @@
               <p><strong>Description:</strong> ${movie.description}</p>
               <p><strong>Showtime:</strong> ${movie.showtime}</p>
               <p><strong>Tickets Sold:</strong> ${movie.tickets_sold}</p>
-              
               <p><strong>Capacity:</strong> ${movie.capacity}</p>
               <p><strong>Runtime:</strong> ${movie.runtime} min</p>
               <p><strong>Available Tickets:</strong> ${movie.capacity - movie.tickets_sold}</p>
-              <button id="buy-ticket">Buy Ticket</button>
-             
-            `;
+               `;
           })
           .catch(error => console.error(error));
       }
     });
+    
+    // Fetch film data
+fetch('http://localhost:3000/films/1')
+  .then(response => response.json())
+  .then(data => {
+    // Calculate available tickets
+    const ticketsAvailable = data.capacity - data.tickets_sold;
+    
+    // Render film details
+    const movieContainer = document.getElementById('movieContainer');
+    movieContainer.innerHTML = `
+      <img src="${data.poster}" alt="${data.title}" style="max-width:300px">
+      <h2>${data.title}</h2>
+      <p>Runtime: ${data.runtime} minutes</p>
+      <p>Showtime: ${data.showtime}</p>
+      <p>Available Tickets: ${ticketsAvailable}</p> `;
+    
+
+   
+  });
+
   </script>
   <script src="index.js"></script>
 </body>
