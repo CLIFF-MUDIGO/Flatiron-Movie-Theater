@@ -1,12 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Movie Search</title>
+  <link rel="stylesheet" href="index.css">
 </head>
 <body>
-    
+  <header>
+    <form id="form">
+      <input type="text" autocomplete="off" id="search" placeholder="Search" class="search">
+    </form>
+  </header>
+  <h1>Movie Titles</h1>
+  <ul id="films-titles"></ul>
+  <button id="buy-tickets">Buy Ticket</button>
+
+ 
+  <main id="main"></main>
+  <script>
+    fetch('http://localhost:3000/films?t=' + Date.now())
+      .then(response => response.json())
+      .then(data => {
+        const numMovies = document.createElement('span');
+        numMovies.textContent = data.length;
+        const filmsTitle = document.getElementById('films-titles');
+        filmsTitle.appendChild(numMovies);
+
+        const filmsTitlesList = document.getElementById('films-titles');
+        data.forEach(movie => {
+          const li = document.createElement('li');
+          li.textContent = movie.title;
+          li.dataset.id = movie.id; // Set the movie ID as a dataset attribute
+          filmsTitlesList.appendChild(li);
+        });
+      })
+      .catch(error => console.error(error));
+
+    const filmsList = document.getElementById('films-titles');
+
+    // Listen for click events on each movie title in the list
+    filmsList.addEventListener('click', e => {
+      if (e.target.tagName === 'LI') {
+        const filmId = e.target.dataset.id; // Get the movie ID from the dataset attribute
+        fetch('http://localhost:3000/films/' + filmId)
+          .then(response => response.json())
+          .then(movie => {
+            // Create and append elements to display movie details
+            const main = document.getElementById('main');
+            main.innerHTML = `
+              <h2>${movie.title}</h2>
+              <img src="${movie.poster}" alt="${movie.title} poster" style="max-width: 300px;">
+              <p><strong>Description:</strong> ${movie.description}</p>
+              <p><strong>Showtime:</strong> ${movie.showtime}</p>
+              <p><strong>Tickets Sold:</strong> ${movie.tickets_sold}</p>
+              <p><strong>Capacity:</strong> ${movie.capacity}</p>
+              <p><strong>Runtime:</strong> ${movie.runtime} min</p>
+             
+            `;
+          })
+          .catch(error => console.error(error));
+      }
+    });
+  </script>
+  <script src="index.js"></script>
 </body>
 </html>
