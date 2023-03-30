@@ -12,10 +12,11 @@
     <form id="form">
       <input type="text" autocomplete="off" id="search" placeholder="Search" class="search">
     </form>
+    
   </header>
   <h1>Movie Titles</h1>
   <ul id="films-titles"></ul>
-  <button id="buy-tickets">Buy Ticket</button>
+  
 
  
   <main id="main"></main>
@@ -48,6 +49,7 @@
           .then(response => response.json())
           .then(movie => {
             // Create and append elements to display movie details
+            
             const main = document.getElementById('main');
             main.innerHTML = `
               <h2>${movie.title}</h2>
@@ -55,8 +57,11 @@
               <p><strong>Description:</strong> ${movie.description}</p>
               <p><strong>Showtime:</strong> ${movie.showtime}</p>
               <p><strong>Tickets Sold:</strong> ${movie.tickets_sold}</p>
+              
               <p><strong>Capacity:</strong> ${movie.capacity}</p>
               <p><strong>Runtime:</strong> ${movie.runtime} min</p>
+              <p><strong>Available Tickets:</strong> ${movie.capacity - movie.tickets_sold}</p>
+              <button id="buy-ticket">Buy Ticket</button>
              
             `;
           })

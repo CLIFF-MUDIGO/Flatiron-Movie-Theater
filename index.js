@@ -6,6 +6,13 @@ const searchForm = document.getElementById("searchForm");
 const searchInput = searchForm.getElementsByTagName("input")[0]
 const searchButton = searchForm.getElementsByTagName("button")[0]
 
+//buying ticket button
+const buyTicketButton = document.getElementById('buy-ticket');
+
+buyTicketButton.addEventListener('click', () => {
+  // Handle the button click event here
+});
+
 
 // Get movie data from API and display them
 function getMovies(url) {
