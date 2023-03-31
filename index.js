@@ -5,6 +5,18 @@ const form = document.getElementById("form");
 const searchForm = document.getElementById("searchForm");
 
 let ticketsAvailable;
+// Get the data for the movie being displayed
+function getData() {
+  const movieId = document.getElementById('buy-ticket-main').getAttribute('data-id');
+  fetch(`${APIURL}/${movieId}`)
+    .then(response => response.json())
+    .then(data => {
+      ticketsAvailable = data.capacity - data.tickets_sold;
+      const ticketsAvailableElement = document.querySelector('#main p:last-child');
+      ticketsAvailableElement.textContent = `Available Tickets: ${ticketsAvailable}`;
+    })
+    .catch(error => console.error(error));
+}
 
 
     // Handle ticket purchase button click
@@ -25,12 +37,13 @@ buyTicketButton.addEventListener('click', () => {
         })
         .then(response => response.json())
         .then(updatedData => {
+           // Update available tickets and UI
+           ticketsAvailable--;
+
           // Calculate available tickets and update UI
-          const ticketsAvailable = updatedData.capacity - updatedData.tickets_sold;
           const ticketsAvailableElement = document.querySelector('#main p:last-child');
-          ticketsAvailableElement.textContent = `Available Tickets: ${ticketsAvailable};
-          buyTicketButton.disabled = true;
-          `;
+           ticketsAvailableElement.textContent = `Available Tickets: ${ticketsAvailable}`;
+buyTicketButton.disabled = true;
         });
       }
     });
@@ -51,6 +64,7 @@ form.addEventListener("submit", (event) => {
     .catch((error) => console.error(error));
 });
 
+
 // Display movies in the main section
 function displayMovies(movies) {
   main.innerHTML = "";
@@ -59,9 +73,15 @@ function displayMovies(movies) {
     const li = document.createElement("li");
     li.textContent = movie.title;
     li.dataset.id = movie.id;
+    const buyTicketButton = document.createElement('button');
+    buyTicketButton.textContent = 'Buy Ticket';
+    buyTicketButton.setAttribute('data-id', movie.id);
+    buyTicketButton.setAttribute('data-tickets-sold', movie.tickets_sold);
+    li.appendChild(buyTicketButton);
     moviesList.appendChild(li);
   });
   main.appendChild(moviesList);
+  getData();
 }
 
 
