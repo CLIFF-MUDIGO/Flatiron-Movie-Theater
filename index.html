@@ -12,13 +12,14 @@
     <form id="form">
       <input type="text" autocomplete="off" id="search" placeholder="Search" class="search">
     </form>
-    
   </header>
   <h1>Movie Titles</h1>
   <ul id="films-titles"></ul>
-  <button id="buy-ticket-main">Buy Ticket</button>
  
-  <main id="main"></main>
+  <button id="buy-ticket-main">Buy Ticket</button>
+  <div id="main">
+
+  </div>
   <script>
     fetch('http://localhost:3000/films?t=' + Date.now())
       .then(response => response.json())
@@ -59,6 +60,7 @@
               <p><strong>Capacity:</strong> ${movie.capacity}</p>
               <p><strong>Runtime:</strong> ${movie.runtime} min</p>
               <p><strong>Available Tickets:</strong> ${movie.capacity - movie.tickets_sold}</p>
+              
                `;
           })
           .catch(error => console.error(error));

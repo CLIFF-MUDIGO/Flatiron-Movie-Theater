@@ -5,3 +5,116 @@
     width: 40%;
     padding: 20px;
   }
+  /* Reset default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Add styles for the header */
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #FEFF86;
+    color: #62CDFF;
+    padding: 1rem;
+  }
+  
+  header h1 {
+    font-size: 2rem;
+  }
+  
+  header .search {
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 5px;
+  }
+  
+  /* Add styles for the movie titles list */
+  #films-titles {
+    margin: 20px 0;
+    list-style: none;
+    padding:0;
+  }
+  
+  #films-titles span {
+    font-weight: bold;
+    font-size: 1.5rem;
+    margin-right: 0.5rem;
+  }
+  
+  #films-titles li {
+    margin: 10px 0;
+    cursor: pointer;
+    font-size: 1.2em;
+    font-weight: bold;
+  }
+  
+  #films-titles li:hover {
+    background-color: #f5f5f5;
+    text-decoration: underline;
+
+  }
+  
+  /* Add styles for the movie details section */
+  #main {
+    margin: 4rem 0;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+  }
+  #main { 
+    opacity: 1;
+  
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 100px;
+    background-color: #f8f8f8;
+    border-radius: 30px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    
+
+  }
+  
+ /* Style the movie title */
+#main h2 {
+    margin-bottom: 10px;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    text-transform: uppercase;
+    }
+  
+  #main img {
+    max-width: 100%;
+    margin-bottom: 1rem;
+  }
+  
+  #main p {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+  
+ /* Style the buy ticket button */
+#buy-ticket-main {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    background-color: #009688;
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    }
+  
+  #buy-ticket-main:hover {
+    background-color: #62CDFF;
+  }
